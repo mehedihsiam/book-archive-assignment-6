@@ -1,3 +1,9 @@
+const errorMessege = document.getElementById('error-messege')
+errorMessege.style.display = 'none';
+
+const didNotFind = document.getElementById('did-not-find')
+didNotFind.style.display = 'none';
+
 const loadBooks = () => {
     const searchInput = document.getElementById('saerch-input');
     const searchText = searchInput.value;
@@ -6,9 +12,14 @@ const loadBooks = () => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayBooks(data))
-}
-// loadBooks();
+        .catch(error => displayError(error))
+};
 
+
+const displayError = () => {
+    const errorMessege = document.getElementById('error-messege')
+    errorMessege.style.display = 'block'
+}
 const displayBooks = (booksContainer) => {
     const commonContainer = document.getElementById('common-container');
 
@@ -17,7 +28,11 @@ const displayBooks = (booksContainer) => {
     totalResult.innerHTML = `
     <small>Total <span class="text-danger">${booksContainer.numFound}</span> results found</small>
     `
-    commonContainer.appendChild(totalResult);
+    if (booksContainer.numFound === 0) {
+        const didNotFind = document.getElementById('did-not-find')
+        didNotFind.style.display = 'block';
+    };
+
 
     // find books object
     const books = booksContainer.docs;
@@ -27,6 +42,7 @@ const displayBooks = (booksContainer) => {
     bookContainer.classList.add('row');
     //loop on books
     books.forEach(book => {
+
         const bookBox = document.createElement('div');
         bookBox.classList.add('text-center', 'col-md-4', 'g-5');
         bookBox.innerHTML = `
@@ -38,6 +54,8 @@ const displayBooks = (booksContainer) => {
         `
         bookContainer.appendChild(bookBox);
     });
+    commonContainer.textContent = '';
+    commonContainer.appendChild(totalResult);
     commonContainer.appendChild(bookContainer);
 
 
