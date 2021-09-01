@@ -5,6 +5,13 @@ const loadBooks = () => {
     const url = `http://openlibrary.org/search.json?q=${searchText}`
     fetch(url)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => displayBooks(data))
 }
 // loadBooks();
+
+const displayBooks = (books) => {
+    const commonContainer = document.getElementById('common-container');
+    commonContainer.innerHTML = `
+    <small>Total <span class="text-danger">${books.numFound}</span> results found</small>
+    `
+}
