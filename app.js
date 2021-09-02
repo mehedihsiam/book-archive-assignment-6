@@ -67,7 +67,7 @@ const displayBooks = (booksContainer) => {
         <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="img-fluid">
         <h5 class="text-center mt-3">${book.title.slice(0, 25)}</h5>
         <p>Author: <span class="text-danger text-bold">${book.author_name}</span></p>
-        <p>Publisher: ${book.publisher_facet}</p>
+        <p>Publisher: ${book.publisher}</p>
         <small class="d-block">First Published: ${book.first_publish_year}</small>
         `
         bookContainer.appendChild(bookBox);
